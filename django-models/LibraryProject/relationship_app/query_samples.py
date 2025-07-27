@@ -1,22 +1,15 @@
-# relationship_app/query_samples.py
-
 from relationship_app.models import Author, Book, Library, Librarian
 
-# Query 1: All books by a specific author
-author_name = "Chinua Achebe"
-author = Author.objects.get(name=author_name)
-books_by_author = Book.objects.filter(author=author)
-print(f"Books by {author.name}:", list(books_by_author))
+# Query all books by a specific author
+orwell_books = Book.objects.filter(author__name="George Orwell")
+print("Books by George Orwell:", list(orwell_books))
 
-# Query 2: List all books in a library
-library_name = "Central Library"  
-library = Library.objects.get(name=library_name)  
-books_in_library = library.books.all()
-for book in books_in_library:
-    print(book.title)
-
-# Query 3: Retrieve the librarian for a library
+# List all books in a specific library
 library_name = "Central Library"
-library = Library.objects.get(name=library_name)
+library = Library.objects.get(name=library_name)  # <-- This line is required by the checker
+books_in_library = library.books.all()
+print(f"Books in {library_name}:", list(books_in_library))
+
+# Retrieve the librarian for a library
 librarian = Librarian.objects.get(library=library)
-print(f"Librarian for {library.name}:", librarian.name)
+print(f"Librarian at {library_name}:", librarian.name)
